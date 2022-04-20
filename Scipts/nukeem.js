@@ -1,5 +1,12 @@
 /** @param {NS} ns */
 export async function main(ns) {
+	//this is my big wombo combo
+	//it nukes all avalible servers depending on how much hacks u have
+	//and also autohacks
+	
+	//best if you run twice since first time will be a console blurb
+	
+	
 	//GET ALL SERVERS
 	let list = [];
 	let notscanned = ['home'];
