@@ -1,30 +1,20 @@
 /** @param {NS} ns */
 export async function main(ns) {
-	let servers = [];
-	let notscanned = ['home'];
-	do {
-		await ns.sleep(50)
-		if (servers.includes(notscanned[0]) == false){
-			servers.push(notscanned[0]);
-			let dynamic = ns.scan(notscanned[0])
-			dynamic.shift()
-			notscanned = notscanned.concat(dynamic)
-			notscanned.shift()
-		} else {
-			notscanned.shift()
-		}
-	} while (notscanned.length != 0)
-	
+	var list = ['home'];
+	for (let i = 0; i < list.length; i++)
+		list.push(...ns.scan(list[i]).filter(hostname => !list.includes(hostname)))
 	let path = [];
 	let dynamic = '';
-	for (let i = 0; i < servers.length; i++){
+	for (let i = 0; i < list.length; i++){
 		path = [];
-		dynamic = servers[i]
+		dynamic = list[i]
 		do{
 			await ns.sleep(50)
 			path.unshift(ns.scan(dynamic)[0])
 			dynamic = ns.scan(dynamic)[0]
 		} while (dynamic != 'home')
-		ns.tprint(path.join('/') + '/' + String(servers[i]))
+		window[list[i]] = path.concat(list[i]) 
+		ns.tprint(path.join('/') + '/' + String(list[i]))
 	}
+	ns.tprint(window['defcomm']) //search a name and bring its path up
 }
