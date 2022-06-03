@@ -8,22 +8,10 @@ export async function main(ns) {
 	
 	
 	//GET ALL SERVERS
-	let list = [];
-	let notscanned = ['home'];
-	do {
-		await ns.sleep(50)
-		if (list.includes(notscanned[0]) == false){
-			list.push(notscanned[0]);
-			let dynamic = ns.scan(notscanned[0])
-			dynamic.shift()
-			notscanned = notscanned.concat(dynamic)
-			notscanned.shift()
-		} else {
-			notscanned.shift()
-		}
-	} while (notscanned.length != 0)
-	
-	
+	var list = ['home'];
+	for (let i = 0; i < list.length; i++)
+		list.push(...ns.scan(list[i]).filter(hostname => !list.includes(hostname)))
+	ns.tprint(list)
 	
 	let num = list.length
 
