@@ -2,20 +2,9 @@
 export async function main(ns) {
 	//this checks which servers gives the most max money according to your hack lvl
   
-  let list = [];
-	let notscanned = ['home'];
-	do {
-		await ns.sleep(50)
-		if (list.includes(notscanned[0]) == false){
-			list.push(notscanned[0]);
-			let dynamic = ns.scan(notscanned[0])
-			dynamic.shift()
-			notscanned = notscanned.concat(dynamic)
-			notscanned.shift()
-		} else {
-			notscanned.shift()
-		}
-	} while (notscanned.length != 0)
+var list = ['home'];
+for (let i = 0; i < list.length; i++)
+	list.push(...ns.scan(list[i]).filter(hostname => !list.includes(hostname)))
 
     let topnum = 0
 	let topname = '';
